@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
@@ -20,10 +21,12 @@ const Navbar = () => {
           <span className="ml-3 text-xl">Tailblocks</span>
         </a>
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-gray-900">First Link</a>
-          <a className="mr-5 hover:text-gray-900">Second Link</a>
-          <a className="mr-5 hover:text-gray-900">Third Link</a>
-          <a className="mr-5 hover:text-gray-900">Fourth Link</a>
+          <Link className="mr-5 hover:text-gray-900" href="/">Home</Link>
+          <Link className="mr-5 hover:text-gray-900" href="/login">Login</Link>
+          <Link className="mr-5 hover:text-gray-900" href="/signup">Signup</Link>
+          <Link className="mr-5 hover:text-gray-900" href="/event-handling">Event-Handling</Link>
+          {/*link tag only be used with href tag*/}
+          
         </nav>
         <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
           Button
