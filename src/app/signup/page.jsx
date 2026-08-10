@@ -31,6 +31,7 @@ const Signup = () => {
     // onSubmit: (values) => {
     //   console.log(values);
     // },
+    
     onSubmit:(values, {resetForm}) => {
       console.log(values);
       axios.post("http://localhost:5000/user/add", values)
@@ -40,7 +41,6 @@ const Signup = () => {
       }).catch((err) => {
         console.log(err);
         console.log("something error");
-        
       });
       
     },
