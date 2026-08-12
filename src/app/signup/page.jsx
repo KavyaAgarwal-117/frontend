@@ -2,6 +2,9 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import React from "react";
+import toast from "react-hot-toast";
+import { tailChase } from "ldrs";
+tailChase.register();
 import * as Yup from "yup";
 
 const SignupSchema = Yup.object().shape({
@@ -10,13 +13,15 @@ const SignupSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().required("password is required")
+  password: Yup.string()
+    .required("password is required")
     .matches(/[a-z]/, "lowercase letter is required")
     .matches(/[A-Z]/, "uppercase letter is required")
     .matches(/[0-9]/, "number is required")
     .matches(/[@#$%&*/]/, "special character is required")
     .min(8, "must contain atleast 8 characters"),
-  confirmPassword: Yup.string().required("confirmed password is required")
+  confirmPassword: Yup.string()
+    .required("confirmed password is required")
     .oneOf([null, Yup.ref("password")], "Password must match"),
 });
 
@@ -31,21 +36,26 @@ const Signup = () => {
     // onSubmit: (values) => {
     //   console.log(values);
     // },
-    
-    onSubmit:(values, {resetForm}) => {
+
+    onSubmit: (values, { resetForm, setSubmitting }) => {
       console.log(values);
-      axios.post("http://localhost:5000/user/add", values)
-      .then((result) => {
-        console.log("user registered successfully");
-        resetForm();
-      }).catch((err) => {
-        console.log(err);
-        console.log("something error");
-      });
-      
+      axios
+        .post("http://localhost:5000/user/add", values)
+        .then((result) => {
+          // console.log("user registered successfully");
+          resetForm();
+          toast.success("user registered successfully");
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("something went wrong");
+          setSubmitting(false);
+        });
     },
     validationSchema: SignupSchema,
   });
+
+  //console.log(signupForm.errors);
 
   return (
     <div className="bg-gray-100 min-h-screen py-10">
@@ -125,7 +135,6 @@ const Signup = () => {
                     onChange={signupForm.handleChange}
                     value={signupForm.values.name}
                     className="py-2.5 sm:py-3 px-4 block w-full bg-white border-gray-200 rounded-lg sm:text-sm text-gray-800 placeholder:text-gray-500 focus:border-blue-700 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                    
                     aria-describedby="email-error"
                   />
                   <div className="hidden absolute inset-y-0 inset-e-0 pointer-events-none pe-3">
@@ -165,7 +174,6 @@ const Signup = () => {
                     onChange={signupForm.handleChange}
                     value={signupForm.values.email}
                     className="py-2.5 sm:py-3 px-4 block w-full bg-white border-gray-200 rounded-lg sm:text-sm text-gray-800 placeholder:text-gray-500 focus:border-blue-700 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                    
                     aria-describedby="email-error"
                   />
                   <div className="hidden absolute inset-y-0 inset-e-0 pointer-events-none pe-3">
@@ -207,7 +215,6 @@ const Signup = () => {
                     onChange={signupForm.handleChange}
                     value={signupForm.values.password}
                     className="py-2.5 sm:py-3 px-4 block w-full bg-white border-gray-200 rounded-lg sm:text-sm text-gray-800 placeholder:text-gray-500 focus:border-blue-700 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                    
                     aria-describedby="password-error"
                   />
                   <div className="hidden absolute inset-y-0 inset-e-0 pointer-events-none pe-3">
@@ -247,7 +254,6 @@ const Signup = () => {
                     onChange={signupForm.handleChange}
                     value={signupForm.values.confirmPassword}
                     className="py-2.5 sm:py-3 px-4 block w-full bg-white border-gray-200 rounded-lg sm:text-sm text-gray-800 placeholder:text-gray-500 focus:border-blue-700 focus:ring-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                    
                     aria-describedby="confirm-password-error"
                   />
                   <div className="hidden absolute inset-y-0 inset-e-0 pointer-events-none pe-3">
@@ -296,11 +302,20 @@ const Signup = () => {
               </div>
               {/* End Checkbox */}
 
-              <button
+              <button disabled={signupForm.isSubmitting}
                 type="submit"
                 className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-600 border border-transparent text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               >
-                Sign up
+                {signupForm.isSubmitting ? (
+                  // Default values shown
+                  <l-tail-chase
+                    size="30"
+                    speed="1.75"
+                    color="black"
+                  ></l-tail-chase>
+                ) : (
+                  "Signup"
+                )}
               </button>
             </div>
           </form>
