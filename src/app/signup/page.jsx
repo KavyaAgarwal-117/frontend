@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { tailChase } from "ldrs";
 tailChase.register();
 import * as Yup from "yup";
+import { p } from "motion/react-client";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -150,12 +151,14 @@ const Signup = () => {
                     </svg>
                   </div>
                 </div>
-                <p
-                  className="hidden text-xs text-red-600 mt-2"
-                  id="email-error"
-                >
-                  Please include a valid email address so we can get back to you
-                </p>
+                {signupForm.errors.name && signupForm.touched.name && (
+                  <p
+                    className="hidden text-xs text-red-600 mt-2"
+                    id="email-error"
+                  >
+                    {signupForm.errors.name}
+                  </p>
+                )}
               </div>
               {/* End Form Group */}
 
@@ -189,12 +192,15 @@ const Signup = () => {
                     </svg>
                   </div>
                 </div>
-                <p
-                  className="hidden text-xs text-red-600 mt-2"
-                  id="email-error"
-                >
-                  Please include a valid email address so we can get back to you
-                </p>
+                {signupForm.errors.email && signupForm.touched.email && (
+                  <p
+                    className="hidden text-xs text-red-600 mt-2"
+                    id="email-error"
+                  >
+                    {" "}
+                    {signupForm.errors.email}
+                  </p>
+                )}
               </div>
               {/* End Form Group */}
 
@@ -230,12 +236,14 @@ const Signup = () => {
                     </svg>
                   </div>
                 </div>
-                <p
-                  className="hidden text-xs text-red-600 mt-2"
-                  id="password-error"
-                >
-                  8+ characters required
-                </p>
+                {signupForm.errors.password && signupForm.touched.password && (
+                  <p
+                    className="hidden text-xs text-red-600 mt-2"
+                    id="password-error"
+                  >
+                    {signupForm.errors.password}
+                  </p>
+                )}
               </div>
               {/* End Form Group */}
 
@@ -269,12 +277,15 @@ const Signup = () => {
                     </svg>
                   </div>
                 </div>
-                <p
-                  className="hidden text-xs text-red-600 mt-2"
-                  id="confirm-password-error"
-                >
-                  Password does not match the password
-                </p>
+                {signupForm.errors.confirmPassword &&
+                  signupForm.touched.confirmPassword && (
+                    <p
+                      className="hidden text-xs text-red-600 mt-2"
+                      id="confirm-password-error"
+                    >
+                      {signupForm.errors.confirmPassword}
+                    </p>
+                  )}
               </div>
               {/* End Form Group */}
 
@@ -290,7 +301,7 @@ const Signup = () => {
                 </div>
                 <div className="ms-3">
                   <label htmlFor="checkbox" className="text-sm text-gray-800">
-                    I accept the{" "}
+                    I accept the
                     <a
                       className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium"
                       href="#"
@@ -302,7 +313,8 @@ const Signup = () => {
               </div>
               {/* End Checkbox */}
 
-              <button disabled={signupForm.isSubmitting}
+              <button
+                disabled={signupForm.isSubmitting}
                 type="submit"
                 className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-600 border border-transparent text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               >
