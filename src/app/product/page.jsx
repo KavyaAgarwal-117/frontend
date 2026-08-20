@@ -165,7 +165,7 @@ const Signup = () => {
                   htmlFor="email"
                   className="block text-sm mb-2 text-gray-800"
                 >
-                  Email address
+                  Enter Brand Name
                 </label>
                 <div className="relative">
                   <input
@@ -208,7 +208,7 @@ const Signup = () => {
                     htmlFor="password"
                     className="block text-sm mb-2 text-gray-800"
                   >
-                    Password
+                    Enter Product Price
                   </label>
                 </div>
                 <div className="relative">
@@ -250,7 +250,7 @@ const Signup = () => {
                   htmlFor="confirm-password"
                   className="block text-sm mb-2 text-gray-800"
                 >
-                  Confirm Password
+                  Category
                 </label>
                 <div className="relative">
                   <input
