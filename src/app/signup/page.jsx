@@ -3,10 +3,9 @@ import axios from "axios";
 import { useFormik } from "formik";
 import React from "react";
 import toast from "react-hot-toast";
-import { tailChase } from "ldrs";
-tailChase.register();
 import * as Yup from "yup";
-import { p } from "motion/react-client";
+import { DotSpinner } from "ldrs/react";
+import "ldrs/react/DotSpinner.css";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -15,7 +14,7 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
-    .required("password is required")
+    .required("Password is required")
     .matches(/[a-z]/, "lowercase letter is required")
     .matches(/[A-Z]/, "uppercase letter is required")
     .matches(/[0-9]/, "number is required")
@@ -26,7 +25,7 @@ const SignupSchema = Yup.object().shape({
     .oneOf([null, Yup.ref("password")], "Password must match"),
 });
 
-const Signup = () => {
+const signup = () => {
   const signupForm = useFormik({
     initialValues: {
       name: "",
@@ -36,28 +35,24 @@ const Signup = () => {
     },
     // onSubmit: (values) => {
     //   console.log(values);
-    // },
 
+    // },
     onSubmit: (values, { resetForm, setSubmitting }) => {
       console.log(values);
       axios
         .post("http://localhost:5000/user/add", values)
         .then((result) => {
-          // console.log("user registered successfully");
           resetForm();
-          toast.success("user registered successfully");
+          toast.success("User registered succesfully");
         })
         .catch((err) => {
           console.log(err);
-          toast.error("something went wrong");
+          toast.error("Something went wrong");
           setSubmitting(false);
         });
     },
     validationSchema: SignupSchema,
   });
-
-  //console.log(signupForm.errors);
-
   return (
     <div className="bg-gray-100 min-h-screen py-10">
       <div className="max-w-lg mx-auto bg-white border border-gray-200 rounded-xl shadow-2xs">
@@ -74,9 +69,9 @@ const Signup = () => {
               Already have an account?
               <a
                 className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium"
-                href="#"
+                href="/login"
               >
-                Sign in here
+                Login here
               </a>
             </p>
           </div>
@@ -152,17 +147,12 @@ const Signup = () => {
                   </div>
                 </div>
                 {signupForm.errors.name && signupForm.touched.name && (
-                  <p
-                    className="hidden text-xs text-red-600 mt-2"
-                    id="email-error"
-                  >
+                  <p className="text-xs text-red-600 mt-2" id="name-error">
                     {signupForm.errors.name}
                   </p>
                 )}
               </div>
               {/* End Form Group */}
-
-              {/* Form Group */}
               <div>
                 <label
                   htmlFor="email"
@@ -193,16 +183,11 @@ const Signup = () => {
                   </div>
                 </div>
                 {signupForm.errors.email && signupForm.touched.email && (
-                  <p
-                    className="hidden text-xs text-red-600 mt-2"
-                    id="email-error"
-                  >
-                    {" "}
+                  <p className="text-xs text-red-600 mt-2" id="email-error">
                     {signupForm.errors.email}
                   </p>
                 )}
               </div>
-              {/* End Form Group */}
 
               {/* Form Group */}
               <div>
@@ -237,10 +222,7 @@ const Signup = () => {
                   </div>
                 </div>
                 {signupForm.errors.password && signupForm.touched.password && (
-                  <p
-                    className="hidden text-xs text-red-600 mt-2"
-                    id="password-error"
-                  >
+                  <p className="text-xs text-red-600 mt-2" id="password-error">
                     {signupForm.errors.password}
                   </p>
                 )}
@@ -280,8 +262,8 @@ const Signup = () => {
                 {signupForm.errors.confirmPassword &&
                   signupForm.touched.confirmPassword && (
                     <p
-                      className="hidden text-xs text-red-600 mt-2"
-                      id="confirm-password-error"
+                      className="text-xs text-red-600 mt-2"
+                      id="confirmPassword-error"
                     >
                       {signupForm.errors.confirmPassword}
                     </p>
@@ -301,7 +283,7 @@ const Signup = () => {
                 </div>
                 <div className="ms-3">
                   <label htmlFor="checkbox" className="text-sm text-gray-800">
-                    I accept the
+                    I accept the{" "}
                     <a
                       className="text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium"
                       href="#"
@@ -319,14 +301,9 @@ const Signup = () => {
                 className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-600 border border-transparent text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               >
                 {signupForm.isSubmitting ? (
-                  // Default values shown
-                  <l-tail-chase
-                    size="30"
-                    speed="1.75"
-                    color="black"
-                  ></l-tail-chase>
+                  <DotSpinner size="30" speed="0.9" color="white" />
                 ) : (
-                  "Signup"
+                  "Sign Up"
                 )}
               </button>
             </div>
@@ -339,4 +316,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default signup;
