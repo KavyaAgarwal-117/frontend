@@ -68,7 +68,7 @@ const Signup = () => {
               id="hs-modal-signin-label"
               className="block text-2xl font-bold text-gray-800"
             >
-            Product Data
+              Product Data
             </h3>
             <p className="mt-2 text-sm text-gray-600">
               Add product
@@ -112,7 +112,6 @@ const Signup = () => {
               </svg>
               Upload Product Image
             </a>
-
           </div>
 
           {/* Form */}
