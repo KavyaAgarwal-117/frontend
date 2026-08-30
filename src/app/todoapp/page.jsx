@@ -63,14 +63,13 @@ const TodoApp = () => {
                     className="p-3 border mb-3 rounded flex justify-between items-center"
                   >
                     <div className="flex gap-2">
-                      <input type="checkbox" 
-                      
-                      onChange={(e) => {
-                        const temp = tasklist;
-                        temp[index].completed = e.target.checked;
-                        setTasklist([...temp]);
-                      }}
-
+                      <input
+                        type="checkbox"
+                        onChange={(e) => {
+                          const temp = tasklist;
+                          temp[index].completed = e.target.checked;
+                          setTasklist([...temp]);
+                        }}
                       />
                       <p>{task.text}</p>
                     </div>
